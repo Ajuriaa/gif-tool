@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDP GIF Tool</title>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>PDP GIF Tool</h1>
+            <p>Generate 62×62px GIF thumbnails from your videos</p>
+        </header>
+
+        <main>
+            <section class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div class="upload-icon">📁</div>
+                        <p>Drop your video here or <button type="button" class="upload-btn" id="uploadBtn">choose file</button></p>
+                        <p class="upload-hint">Supports MP4, WebM, MOV</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                </div>
+            </section>
+
+            <section class="processing-section" id="processingSection" style="display: none;">
+                <div class="video-controls">
+                    <div class="video-container">
+                        <video id="videoPreview" controls></video>
+                        <div class="crop-overlay" id="cropOverlay">
+                            <div class="crop-box" id="cropBox">
+                                <div class="crop-handle" data-corner="nw"></div>
+                                <div class="crop-handle" data-corner="ne"></div>
+                                <div class="crop-handle" data-corner="sw"></div>
+                                <div class="crop-handle" data-corner="se"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="time-control">
+                            <label for="timeSlider">Start Time:</label>
+                            <input type="range" id="timeSlider" min="0" max="100" value="0" step="0.1">
+                            <span id="timeDisplay">0s</span>
+                        </div>
+                        
+                        <div class="crop-info">
+                            <p>Drag the square to select your crop area</p>
+                            <p>Final GIF: 62×62px, 4 seconds, ~10fps</p>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <button id="generateBtn" class="primary-btn">Generate GIF</button>
+                            <button id="cancelBtn" class="secondary-btn" style="display: none;">Cancel</button>
+                            <button id="resetBtn" class="secondary-btn">Upload New Video</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">Initializing...</p>
+                </div>
+
+                <div class="result-section" id="resultSection" style="display: none;">
+                    <div class="result-preview">
+                        <img id="resultGif" alt="Generated GIF">
+                        <div class="result-info">
+                            <p>Your GIF is ready!</p>
+                            <button id="downloadBtn" class="primary-btn">Download GIF</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>All processing happens in your browser - your videos never leave your device</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+</body>
+</html>

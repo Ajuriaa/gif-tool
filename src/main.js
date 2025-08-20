@@ -30,6 +30,13 @@ class GifTool {
             cropBoxEl: document.getElementById('cropBox'),
             timeSlider: document.getElementById('timeSlider'),
             timeDisplay: document.getElementById('timeDisplay'),
+            durationSlider: document.getElementById('durationSlider'),
+            durationDisplay: document.getElementById('durationDisplay'),
+            sizeSlider: document.getElementById('sizeSlider'),
+            sizeDisplay: document.getElementById('sizeDisplay'),
+            fpsSlider: document.getElementById('fpsSlider'),
+            fpsDisplay: document.getElementById('fpsDisplay'),
+            gifSpecs: document.getElementById('gifSpecs'),
             generateBtn: document.getElementById('generateBtn'),
             cancelBtn: document.getElementById('cancelBtn'),
             resetBtn: document.getElementById('resetBtn'),
@@ -59,6 +66,9 @@ class GifTool {
         this.elements.videoPreview.addEventListener('timeupdate', () => this.updateTimeDisplay());
         
         this.elements.timeSlider.addEventListener('input', (e) => this.handleTimeSliderChange(e));
+        this.elements.durationSlider.addEventListener('input', (e) => this.handleDurationSliderChange(e));
+        this.elements.sizeSlider.addEventListener('input', (e) => this.handleSizeSliderChange(e));
+        this.elements.fpsSlider.addEventListener('input', (e) => this.handleFpsSliderChange(e));
         
         this.elements.generateBtn.addEventListener('click', () => this.generateGif());
         this.elements.cancelBtn.addEventListener('click', () => this.cancelGeneration());
@@ -132,6 +142,7 @@ class GifTool {
         this.elements.timeSlider.max = duration;
         this.elements.uploadSection.style.display = 'none';
         this.elements.processingSection.style.display = 'block';
+        this.updateGifSpecs();
         
         setTimeout(() => {
             this.initializeCropBox();
@@ -146,6 +157,31 @@ class GifTool {
 
     handleTimeSliderChange(e) {
         this.elements.videoPreview.currentTime = parseFloat(e.target.value);
+    }
+
+    handleDurationSliderChange(e) {
+        const duration = parseFloat(e.target.value);
+        this.elements.durationDisplay.textContent = `${duration}s`;
+        this.updateGifSpecs();
+    }
+
+    handleSizeSliderChange(e) {
+        const size = parseInt(e.target.value);
+        this.elements.sizeDisplay.textContent = `${size}×${size}px`;
+        this.updateGifSpecs();
+    }
+
+    handleFpsSliderChange(e) {
+        const fps = parseInt(e.target.value);
+        this.elements.fpsDisplay.textContent = `${fps}fps`;
+        this.updateGifSpecs();
+    }
+
+    updateGifSpecs() {
+        const size = parseInt(this.elements.sizeSlider.value);
+        const duration = parseFloat(this.elements.durationSlider.value);
+        const fps = parseInt(this.elements.fpsSlider.value);
+        this.elements.gifSpecs.textContent = `Final GIF: ${size}×${size}px, ${duration} seconds, ${fps}fps`;
     }
 
     initializeCropBox() {
@@ -350,9 +386,9 @@ class GifTool {
                     videoFile: this.video,
                     startTime,
                     cropParams,
-                    duration: 4,
-                    fps: 10,
-                    outputSize: 62
+                    duration: parseFloat(this.elements.durationSlider.value),
+                    fps: parseInt(this.elements.fpsSlider.value),
+                    outputSize: parseInt(this.elements.sizeSlider.value)
                 }
             });
             

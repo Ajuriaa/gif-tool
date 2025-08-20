@@ -20,6 +20,7 @@ class GifTool {
 
     initializeElements() {
         this.elements = {
+            uploadSection: document.querySelector('.upload-section'),
             uploadArea: document.getElementById('uploadArea'),
             uploadBtn: document.getElementById('uploadBtn'),
             fileInput: document.getElementById('fileInput'),
@@ -129,6 +130,7 @@ class GifTool {
         }
         
         this.elements.timeSlider.max = duration;
+        this.elements.uploadSection.style.display = 'none';
         this.elements.processingSection.style.display = 'block';
         
         setTimeout(() => {
@@ -450,6 +452,7 @@ class GifTool {
         this.video = null;
         this.gifBlob = null;
         
+        this.elements.uploadSection.style.display = 'block';
         this.elements.processingSection.style.display = 'none';
         this.elements.progressSection.style.display = 'none';
         this.elements.resultSection.style.display = 'none';
